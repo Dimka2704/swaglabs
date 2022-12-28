@@ -6,9 +6,11 @@ from pages.client_information_page import Client_information_page
 from pages.finish_page import Finish_page
 from pages.main_page import Main_page
 from pages.payment_page import Payment_page
+import allure
 
 
-def test_buy_product():
+@allure.description("Test buy product")
+def test_buy_product(set_up):
     driver = webdriver.Chrome(executable_path='/Users/dmitrij/PycharmProjects/resource/chromedriver')
     ap = Authorization_page(driver)
     ap.authorization()

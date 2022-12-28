@@ -3,6 +3,8 @@ from base.base_class import Base_page
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from utilities.logger import Logger
+import allure
 
 
 class Main_page(Base_page):
@@ -19,6 +21,7 @@ class Main_page(Base_page):
     cart = "//a[@class='shopping_cart_link']"
     menu = "//button[@id='react-burger-menu-btn']"
     link_about = "//a[@id='about_sidebar_link']"
+    link_logout = "//a[@id='logout_sidebar_link']"
 
     """Условия применения к элементу"""
     def get_t_shirt_red(self):
@@ -38,6 +41,9 @@ class Main_page(Base_page):
 
     def get_link_about(self):
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.link_about)))
+
+    def get_link_logout(self):
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.link_logout)))
 
     """Действия с элементами"""
     def scroll_down(self):
@@ -64,27 +70,54 @@ class Main_page(Base_page):
         self.get_link_about().click()
         print("Click about")
 
+    def click_link_logout(self):
+        self.get_link_logout().click()
+        print("Click logout")
+
     """Добавление товара в корзину"""
     def t_shirt_add_to_cart(self):
-        self.get_current_url()
-        self.scroll_down()
-        self.assert_text_check(self.get_t_shirt_red(), "Test.allTheThings() T-Shirt (Red)")
-        self.assert_text_check(self.get_t_shirt_price(), "$15.99")
-        self.click_add_to_cart_button()
-        self.scroll_ap()
-        self.get_screenshot()
+        with allure.step("T-shirt add to cart"):
+            Logger.add_start_step(method="t_shirt_add_to_cart")
+            self.get_current_url()
+            self.scroll_down()
+            self.assert_text_check(self.get_t_shirt_red(), "Test.allTheThings() T-Shirt (Red)")
+            self.assert_text_check(self.get_t_shirt_price(), "$15.99")
+            self.click_add_to_cart_button()
+            self.scroll_ap()
+            self.get_screenshot()
+            Logger.add_end_step(url=self.driver.current_url, method="t_shirt_add_to_cart")
 
     """Переход в корзину с товаром"""
     def go_to_the_shopping_cart(self):
-        self.get_current_url()
-        self.scroll_down()
-        self.click_add_to_cart_button()
-        self.scroll_ap()
-        self.click_cart()
+        with allure.step("Go to the shopping cart"):
+            Logger.add_start_step(method="go_to_the_shopping_cart")
+            self.get_current_url()
+            self.scroll_down()
+            self.click_add_to_cart_button()
+            self.scroll_ap()
+            self.click_cart()
+            Logger.add_end_step(url=self.driver.current_url, method="go_to_the_shopping_cart")
 
+    '''Открытие меню О нас'''
     def select_menu_about(self):
-        self.get_current_url()
-        time.sleep(1.5)
-        self.click_menu()
-        self.click_link_about()
-        self.assert_url("https://saucelabs.com/")
+        with allure.step("Select menu about"):
+            Logger.add_start_step(method="select_menu_about")
+            self.get_current_url()
+            time.sleep(1.5)
+            self.click_menu()
+            self.click_link_about()
+            self.assert_url("https://saucelabs.com/")
+            Logger.add_end_step(url=self.driver.current_url, method="select_menu_about")
+
+    '''Разлогиниться на сайте'''
+    def select_menu_logout(self):
+        with allure.step("Select menu logout"):
+            Logger.add_start_step(method="select_menu_logout")
+            self.get_current_url()
+            time.sleep(1.5)
+            self.click_menu()
+            self.click_link_logout()
+            self.assert_url("https://www.saucedemo.com/")
+            Logger.add_end_step(url=self.driver.current_url, method="select_menu_logout")
+
+

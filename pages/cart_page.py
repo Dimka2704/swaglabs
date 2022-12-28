@@ -2,6 +2,8 @@ from base.base_class import Base_page
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from utilities.logger import Logger
+import allure
 
 
 class Cart_page(Base_page):
@@ -41,13 +43,19 @@ class Cart_page(Base_page):
 
     """Удаление товара из корзины"""
     def remove_product_from_cart(self):
-        self.get_current_url()
-        self.click_remove_button()
-        self.get_screenshot()
+        with allure.step("Remove product from cart"):
+            Logger.add_start_step(method="remove_product_from_cart")
+            self.get_current_url()
+            self.click_remove_button()
+            self.get_screenshot()
+            Logger.add_end_step(url=self.driver.current_url, method="remove_product_from_cart")
 
     """Подтверждение, что товар добавлен"""
     def confirmation_product(self):
-        self.get_current_url()
-        self.click_checkout_button()
+        with allure.step("Confirmation product"):
+            Logger.add_start_step(method="confirmation_product")
+            self.get_current_url()
+            self.click_checkout_button()
+            Logger.add_end_step(url=self.driver.current_url, method="confirmation_product")
 
 

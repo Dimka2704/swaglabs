@@ -3,6 +3,8 @@ from base.base_class import Base_page
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from utilities.logger import Logger
+import allure
 
 
 class Authorization_page(Base_page):
@@ -56,33 +58,42 @@ class Authorization_page(Base_page):
 
     "Авторизация"
     def authorization(self):
-        self.driver.get(self.url)
-        self.driver.maximize_window()
-        self.get_current_url()
-        self.input_user_name("standard_user")
-        self.input_password("secret_sauce")
-        self.click_login_button()
-        self.assert_text_check(self.get_header_products(), "PRODUCTS")
+        with allure.step("Authorization"):
+            Logger.add_start_step(method="authorization")
+            self.driver.get(self.url)
+            self.driver.maximize_window()
+            self.get_current_url()
+            self.input_user_name("standard_user")
+            self.input_password("secret_sauce")
+            self.click_login_button()
+            self.assert_text_check(self.get_header_products(), "PRODUCTS")
+            Logger.add_end_step(url=self.driver.current_url, method="authorization")
 
     """Ошибка авторизации при неверном user_name"""
     def incorrect_authorization_user_name(self):
-        self.driver.get(self.url)
-        self.driver.maximize_window()
-        self.get_current_url()
-        self.input_user_name("standard_users")
-        self.input_password("secret_sauce")
-        self.keyboard_login_button()
-        self.assert_text_check(self.get_warning(),
-                                 "Epic sadface: Username and password do not match any user in this service")
+        with allure.step("Incorrect authorization user name"):
+            Logger.add_start_step(method="incorrect_authorization_user_name")
+            self.driver.get(self.url)
+            self.driver.maximize_window()
+            self.get_current_url()
+            self.input_user_name("standard_users")
+            self.input_password("secret_sauce")
+            self.keyboard_login_button()
+            self.assert_text_check(self.get_warning(),
+                                     "Epic sadface: Username and password do not match any user in this service")
+            Logger.add_end_step(url=self.driver.current_url, method="incorrect_authorization_user_name")
 
     """Ошибка авторизации при неверном password"""
     def incorrect_authorization_password(self):
-        self.driver.get(self.url)
-        self.driver.maximize_window()
-        self.get_current_url()
-        self.input_user_name("standard_user")
-        self.input_password("secret_sauces")
-        self.keyboard_login_button()
-        self.assert_text_check(self.get_warning(),
-                                 "Epic sadface: Username and password do not match any user in this service")
+        with allure.step("Incorrect authorization password"):
+            Logger.add_start_step(method="incorrect_authorization_password")
+            self.driver.get(self.url)
+            self.driver.maximize_window()
+            self.get_current_url()
+            self.input_user_name("standard_user")
+            self.input_password("secret_sauces")
+            self.keyboard_login_button()
+            self.assert_text_check(self.get_warning(),
+                                     "Epic sadface: Username and password do not match any user in this service")
+            Logger.add_end_step(url=self.driver.current_url, method="incorrect_authorization_password")
 

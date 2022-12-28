@@ -2,6 +2,8 @@ from base.base_class import Base_page
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from utilities.logger import Logger
+import allure
 
 
 class Client_information_page(Base_page):
@@ -49,10 +51,13 @@ class Client_information_page(Base_page):
 
     """Шаги заполнения и подтверждения формы клиента"""
     def input_information(self):
-        self.get_current_url()
-        self.input_first_name("garry")
-        self.input_last_name("potter")
-        self.input_postal_code("garry@mail.ru")
-        self.click_continue_button()
+        with allure.step("Input information"):
+            Logger.add_start_step(method="input_information")
+            self.get_current_url()
+            self.input_first_name("garry")
+            self.input_last_name("potter")
+            self.input_postal_code("garry@mail.ru")
+            self.click_continue_button()
+            Logger.add_end_step(url=self.driver.current_url, method="input_information")
 
 
