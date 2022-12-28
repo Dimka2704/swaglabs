@@ -1,0 +1,33 @@
+
+-----
+Test: tests/test_authorization.py::test_authorization (call)
+Start time: 2022-12-28 18:00:37.384583
+Start name method: authorization
+
+End time: 2022-12-28 18:00:42.373893
+End name method: authorization
+URL: https://www.saucedemo.com/inventory.html
+
+-----
+
+-----
+Test: tests/test_authorization.py::test_incorrect_authorization_user_name (call)
+Start time: 2022-12-28 18:00:47.224889
+Start name method: incorrect_authorization_user_name
+
+End time: 2022-12-28 18:00:51.084450
+End name method: incorrect_authorization_user_name
+URL: https://www.saucedemo.com/
+
+-----
+
+-----
+Test: tests/test_authorization.py::test_incorrect_authorization_password (call)
+Start time: 2022-12-28 18:00:55.872232
+Start name method: incorrect_authorization_password
+
+End time: 2022-12-28 18:00:59.211021
+End name method: incorrect_authorization_password
+URL: https://www.saucedemo.com/
+
+-----

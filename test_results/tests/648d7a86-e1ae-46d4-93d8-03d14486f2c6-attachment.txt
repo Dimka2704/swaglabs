@@ -1,0 +1,17 @@
+start test
+current url https://www.saucedemo.com/
+Input user name
+Input password
+Click login button
+Success
+current url https://www.saucedemo.com/inventory.html
+Scroll down
+Click add to cart button
+Scroll up
+Click cart
+current url https://www.saucedemo.com/cart.html
+Click remove button
+Click continue shopping button
+Scroll down
+Success
+finish test
